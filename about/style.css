@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+.navbar {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.navbar a {
+  color: black;
+  text-align: center;
+  padding: 14px 50px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+.Test {
+  margin: auto;
+  text-align: center;
+  width: 50%;
+}
+
+.lol {
+  width: 40%;
+  height: 150px;
+  /*background: aqua;*/
+  margin: auto;
+  /*border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+}
+.Carte1 {
+  width: 200px;
+  height: 320px;
+  padding: 50px;
+  border: 3px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  float: left;
+}
+
+
+
+.Carte2 {
+  width : 200px;
+  height: 320px;
+  padding: 50px;
+  /*background: aqua;*/
+  border: 3px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  float: right;
+}
+
+.Carte1 img {
+  margin: auto;
+  display: block;
+  width: 150px;
+  height: 150px;
+}
+
+.Carte2 img {
+  margin: auto;
+  display: block;
+  width: 150px;
+  height: 150px;
+}
