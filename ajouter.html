@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIND. MY. BOUFFE.</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search,restaurant,add,close">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="accueil.html" id="homeLink">FIND. MY. BOUFFE.</a>
+        <div class="searchbar">
+            <input class="searchinput" id="searchInput" placeholder="Rechercher un restaurant, plat..." autocomplete="off">
+            <button class="search-btn" id="searchBtn">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="form-title">Ajouter un Restaurant</h2>
+            <form id="restaurantForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="restaurantName">Nom du Restaurant *</label>
+                        <input type="text" id="restaurantName" name="restaurantName" required>
+                        <div class="error-message" id="nameError">Veuillez entrer un nom de restaurant</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cuisine">Type de Cuisine *</label>
+                        <select id="cuisine" name="cuisine" required>
+                            <option value="">Sélectionner...</option>
+                            <option value="francaise">Française</option>
+                            <option value="italienne">Italienne</option>
+                            <option value="chinoise">Chinoise</option>
+                            <option value="japonaise">Japonaise</option>
+                            <option value="mexicaine">Mexicaine</option>
+                            <option value="indienne">Indienne</option>
+                            <option value="americaine">Américaine</option>
+                            <option value="libanaise">Libanaise</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                        <div class="error-message" id="cuisineError">Veuillez sélectionner un type de cuisine</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address">Adresse *</label>
+                        <input type="text" id="address" name="address" required>
+                        <div class="error-message" id="addressError">Veuillez entrer une adresse</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="01 23 45 67 89">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rating">Note (1-5 étoiles) *</label>
+                        <select id="rating" name="rating" required>
+                            <option value="">Choisir...</option>
+                            <option value="1">⭐ 1 étoile</option>
+                            <option value="2">⭐⭐ 2 étoiles</option>
+                            <option value="3">⭐⭐⭐ 3 étoiles</option>
+                            <option value="4">⭐⭐⭐⭐ 4 étoiles</option>
+                            <option value="5">⭐⭐⭐⭐⭐ 5 étoiles</option>
+                        </select>
+                        <div class="error-message" id="ratingError">Veuillez donner une note</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Gamme de Prix</label>
+                        <select id="price" name="price">
+                            <option value="">Sélectionner...</option>
+                            <option value="€">€ - Économique</option>
+                            <option value="€€">€€ - Modéré</option>
+                            <option value="€€€">€€€ - Cher</option>
+                            <option value="€€€€">€€€€ - Très cher</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description / Commentaire</label>
+                    <textarea id="description" name="description" placeholder="Partagez votre expérience..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Ajouter le Restaurant</button>
+            </form>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <h3>Résultats de recherche</h3>
+            <div id="searchResults"></div>
+        </div>
+    </div>
+    <script src="recherche.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          // Retrieve any user-added restaurants from sessionStorage
+          let storedRestaurants = sessionStorage.getItem("restaurants");
+          if (storedRestaurants) {
+            try {
+              let userRestaurants = JSON.parse(storedRestaurants);
+              if (Array.isArray(userRestaurants)) {
+                // Merge the stored restaurants with the base restaurants array from recherche.js
+                if (typeof restaurants !== "undefined") {
+                  restaurants = restaurants.concat(userRestaurants);
+                }
+              }
+            } catch (e) {
+              console.error("Error parsing stored restaurants", e);
+            }
+          }
+      
+          // Set up form submission to add a new restaurant
+          const form = document.getElementById("restaurantForm");
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+      
+            // Collect form values
+            const newRestaurant = {
+              name: document.getElementById("restaurantName").value,
+              cuisine: document.getElementById("cuisine").value,
+              address: document.getElementById("address").value,
+              phone: document.getElementById("phone").value,
+              rating: Number(document.getElementById("rating").value),
+              price: document.getElementById("price").value,
+              description: document.getElementById("description").value,
+              distance: "" // Optionally add a distance field if needed
+            };
+      
+            // Retrieve any already stored user-added restaurants, or initialize an empty array
+            let stored = sessionStorage.getItem("restaurants");
+            let restaurantsArray = [];
+            if (stored) {
+              try {
+                restaurantsArray = JSON.parse(stored);
+                if (!Array.isArray(restaurantsArray)) restaurantsArray = [];
+              } catch (err) {
+                restaurantsArray = [];
+              }
+            }
+      
+            // Append the new restaurant to the array and update sessionStorage
+            restaurantsArray.push(newRestaurant);
+            sessionStorage.setItem("restaurants", JSON.stringify(restaurantsArray));
+      
+            // Optionally update the global restaurants variable for immediate use
+            if (typeof restaurants !== "undefined") {
+              restaurants.push(newRestaurant);
+            }
+      
+            // Show a confirmation message and reset form
+            alert("Restaurant ajouté avec succès !");
+            form.reset();
+          });
+        });
+      
+        // Before the page unloads, save/update the sessionStorage with the current global "restaurants" variable.
+        window.addEventListener("beforeunload", () => {
+          if (typeof restaurants !== "undefined") {
+            sessionStorage.setItem("restaurants", JSON.stringify(restaurants.filter(r => {
+              return true; // Optionally filter only user-added restaurants
+            })));
+          }
+        });
+      </script>
+</body>
+</html>

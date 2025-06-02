@@ -1,35 +1,66 @@
 <!DOCTYPE html>
-<html lang="fr" >
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Projet WEB</title>
-  <link rel="stylesheet" href="./style.css">
+  <title>Bienvenue - Burger Time</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffefdb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+    }
 
+    .burger-container {
+      text-align: center;
+    }
+
+    #burger-logo {
+      width: 200px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #burger-logo:active {
+      transform: scale(0.95);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #d35400;
+    }
+  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Web</title>
-</head>
-
-<body>
-  <div class="navbar">
-    <a href="./index.html">Accueil</a>
-    <a href="#statistiques">Statistiques</a>
-    <a href="#plus">Plus</a>
-    <a href="./about/about.html">À propos</a>
+  <div class="burger-container">
+    <h1>Vas-y tape un croc dedans!</h1>
+    <img id="burger-logo" src="burger.png" alt="Burger logo">
   </div>
 
-  <div style="padding: 20px;" class="test">
-    <h1>Éliminer la faim!</h1>
-    <h2>Qu'est-ce que l'ODD2 ?</h2>
-    <p>L'Objectif de Développement Durable 2 vise à éliminer la faim, assurer la sécurité alimentaire, améliorer la nutrition et promouvoir l'agriculture durable. Adopté par tous les États membres de l'ONU en 2015, cet objectif s'inscrit dans l'Agenda 2030 pour le développement durable.</p>
+  <script>
+    let bites = 0;
+    const burger = document.getElementById('burger-logo');
 
-  </div>
-</body>
-<!-- partial -->
-  
+    burger.addEventListener('click', () => {
+      bites++;
+
+      // Simule un effet de "crocs" visuel avec changement d'image
+      burger.src = `burger_bite${bites}.png`;
+
+      if (bites >= 3) {
+        // Petite pause avant redirection
+        setTimeout(() => {
+          window.location.href = 'accueil.html';
+        }, 500);
+      }
+    });
+  </script>
 </body>
 </html>
+

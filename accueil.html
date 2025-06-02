@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Find. My. Bouffe.</title>
+  <link rel="stylesheet" href="./style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="navbar">
+    <a href="accueil.html" id="homeLink">FIND. MY. BOUFFE.</a>
+    <div class="searchbar">
+      <input class="searchinput" id="searchInput" placeholder="Rechercher un restaurant, plat..." autocomplete="off">
+      <button class="search-btn" id="searchBtn">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+      <div class="suggestions" id="suggestions"></div>
+    </div>
+  </div>
+
+  <div class="search-results-container" id="resultsContainer" style="display: none;">
+    <h3>Résultats de recherche</h3>
+    <div id="searchResults"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <p>TENDANCES</p>
+    </div>
+    <div class="card-container">
+      <div class="card">
+        <a href="mcdo.html">
+          <div class="icone">🍟</div>
+          <div class="titre">McDo</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="nash.html">
+          <div class="icone">🍗</div>
+          <div class="titre">Nash</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="dunkin.html">
+          <div class="icone">🍩</div>
+          <div class="titre">Dunkin</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="ippudo.html">
+          <div class="icone">🍜</div>
+          <div class="titre">Ippudo</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="master-poulet.html">
+          <div class="icone">🍖</div>
+          <div class="titre">Master Poulet</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <p>THEME :</p>
+    </div>
+    <div class="card-container">
+      <div class="card">
+        <a href="france.html">
+          <div class="icone">🇫🇷</div>
+          <div class="titre">France</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="amerique.html">
+          <div class="icone">🇺🇸</div>
+          <div class="titre">Amérique</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="bresil.html">
+          <div class="icone">🇧🇷</div>
+          <div class="titre">Brésil</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="chine.html">
+          <div class="icone">🇨🇳</div>
+          <div class="titre">Chine</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="vietnam.html">
+          <div class="icone">🇻🇳</div>
+          <div class="titre">Vietnam</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <p>SPECIALITE :</p>
+    </div>
+    <div class="card-container">
+      <div class="card">
+        <a href="burger.html">
+          <div class="icone">🍔</div>
+          <div class="titre">Burger</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="pizza.html">
+          <div class="icone">🍕</div>
+          <div class="titre">Pizza</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="pate.html">
+          <div class="icone">🍝</div>
+          <div class="titre">Pâte</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="ramen.html">
+          <div class="icone">🍜</div>
+          <div class="titre">Ramen</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="tacos.html">
+          <div class="icone">🌮</div>
+          <div class="titre">Tacos</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">
+      <p>BUDGET :</p>
+    </div>
+    <div class="card-container">
+      <div class="card">
+        <a href="budget10.html">
+          <div class="icone">💶</div>
+          <div class="titre">≈10 €</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="budget20.html">
+          <div class="icone">💶</div>
+          <div class="titre">≈20 €</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="budget30.html">
+          <div class="icone">💶</div>
+          <div class="titre">≈30 €</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="budget50.html">
+          <div class="icone">💶</div>
+          <div class="titre">≈50 €</div>
+        </a>
+      </div>
+      <div class="card">
+        <a href="budget100.html">
+          <div class="icone">💶</div>
+          <div class="titre">≈100 €</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="about.html">à propos</a>
+    <br>
+    <a href="ajouter.html">Ajouter un restaurant</a>
+  </footer>
+
+  <script src="recherche.js"></script> 
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      let storedRestaurants = sessionStorage.getItem("restaurants");
+      if (storedRestaurants) {
+        try {
+          let userRestaurants = JSON.parse(storedRestaurants);
+          if (Array.isArray(userRestaurants)) {
+            if (typeof restaurants !== "undefined") {
+              restaurants = restaurants.concat(userRestaurants);
+            }
+          }
+        } catch (e) {
+          console.error("Error parsing stored restaurants", e);
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
